@@ -8,7 +8,7 @@ function getFone(app) {
 
 function insertFone(app) {
   app.post("/fone", (req, res) => {
-    res.send("Post feito com sucesso");
+    res.send(req.body);
   });
 }
 
