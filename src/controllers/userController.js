@@ -1,15 +1,25 @@
-function getUser(app) {
-  app.get("/usuario", (req, res) => {
-    res.send(
-      "Rota ativada com GET e recurso usuário: valores de usuário devem ser retornados"
+const User = require("../models/userModel");
+
+class UserController {
+  constructor(database) {
+    this.database = database;
+  }
+
+  show = (req, res) => {
+    res.send(this.database);
+  };
+
+  store = (req, res) => {
+    const user = new User(
+      "Felipe Ferreira",
+      "felipe.ferreira@resilia.com.br",
+      "umasenhasegura"
     );
-  });
+
+    this.database.push(user);
+
+    res.send(user);
+  };
 }
 
-function insertUser(app) {
-  app.post("/usuario", (req, res) => {
-    res.send("Usuario inserido no banco de dados");
-  });
-}
-
-module.exports = { getUser, insertUser };
+module.exports = UserController;
