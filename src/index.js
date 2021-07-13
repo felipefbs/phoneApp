@@ -29,5 +29,6 @@ app.post("/fones", foneController.store);
 app.get("/users/:name", userController.show);
 app.get("/users", userController.index);
 app.post("/users", userController.store);
+app.delete("/users/:name", userController.delete);
 
 app.listen(APP_PORT);

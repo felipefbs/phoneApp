@@ -34,6 +34,16 @@ class UserController {
       data: user,
     });
   };
+
+  delete = (req, res) => {
+    const name = req.params.name;
+
+    this.database = this.database.filter((user) => {
+      return user.name !== name;
+    });
+
+    res.send(`Usuário deletado`);
+  };
 }
 
 module.exports = UserController;
