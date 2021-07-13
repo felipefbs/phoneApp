@@ -26,7 +26,7 @@ app.get("/", function (req, res) {
 app.get("/fones/", foneController.index);
 app.post("/fones", foneController.store);
 
-app.get("/users", userController.show);
+app.get("/users", userController.index);
 app.post("/users", userController.store);
 
 app.listen(APP_PORT);

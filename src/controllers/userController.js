@@ -5,20 +5,24 @@ class UserController {
     this.database = database;
   }
 
-  show = (req, res) => {
-    res.send(this.database);
+  index = (req, res) => {
+    res.send({
+      message: "Usuários salvos no banco de dados",
+      data: this.database,
+    });
   };
 
   store = (req, res) => {
-    const user = new User(
-      "Felipe Ferreira",
-      "felipe.ferreira@resilia.com.br",
-      "umasenhasegura"
-    );
+    const { name, email, password } = req.body;
+
+    const user = new User(name, email, password);
 
     this.database.push(user);
 
-    res.send(user);
+    res.send({
+      message: "Usuário salvo no banco de dados",
+      data: user,
+    });
   };
 }
 
