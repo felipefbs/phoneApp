@@ -1,6 +1,7 @@
 class Fone {
-  constructor(name, type) {
-    this.name = name;
+  constructor(model, manufacturer, type) {
+    this.model = model;
+    this.manufacturer = manufacturer;
     this.type = type;
   }
 }
