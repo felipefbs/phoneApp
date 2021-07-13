@@ -5,17 +5,18 @@ class FoneController {
     this.database = database;
   }
 
-  show = (req, res) => {
-    res.send(this.database);
+  index = (req, res) => {
+    res.send({ message: "Fones salvo no banco de dados", data: this.database });
   };
 
   store = (req, res) => {
-    const fone = new Fone("Kuba Disco", "Fechado");
-    console.log(fone);
+    const { name, type } = req.body;
+
+    const fone = new Fone(name, type);
 
     this.database.push(fone);
 
-    res.send({ message: "Fone salvo no banco de dados", fone: fone });
+    res.send({ message: "Fone salvo no banco de dados", data: fone });
   };
 }
 
