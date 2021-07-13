@@ -10,14 +10,14 @@ class UserController {
 
     this.database.forEach((user) => {
       if (user.name === name) {
-        res.send(user);
+        res.send({ data: user });
       }
     });
   };
 
   index = (req, res) => {
     res.send({
-      message: "Usuários salvos no banco de dados",
+      message: "Usuários no banco de dados",
       data: this.database,
     });
   };
@@ -42,7 +42,10 @@ class UserController {
       return user.name !== name;
     });
 
-    res.send(`Usuário deletado`);
+    res.send({
+      message: "Usuário removido do banco de dados",
+      data: name,
+    });
   };
 }
 

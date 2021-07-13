@@ -23,8 +23,10 @@ app.get("/", function (req, res) {
   res.send("Hello, World!");
 });
 
+app.get("/fones/:model", foneController.show);
 app.get("/fones", foneController.index);
 app.post("/fones", foneController.store);
+app.delete("/fones/:model", foneController.delete);
 
 app.get("/users/:name", userController.show);
 app.get("/users", userController.index);
