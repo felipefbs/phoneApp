@@ -5,6 +5,16 @@ class UserController {
     this.database = database;
   }
 
+  show = (req, res) => {
+    const name = req.params.name;
+
+    this.database.forEach((user) => {
+      if (user.name === name) {
+        res.send(user);
+      }
+    });
+  };
+
   index = (req, res) => {
     res.send({
       message: "Usuários salvos no banco de dados",
