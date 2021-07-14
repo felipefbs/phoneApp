@@ -31,6 +31,7 @@ app.delete("/fones/:model", foneController.delete);
 app.get("/users/:name", userController.show);
 app.get("/users", userController.index);
 app.post("/users", userController.store);
+app.put("/users/:name", userController.update);
 app.delete("/users/:name", userController.delete);
 
 app.listen(APP_PORT);
