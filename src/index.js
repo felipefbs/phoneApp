@@ -5,12 +5,12 @@ const { APP_PORT } = require("./utils/appConfig");
 const FoneController = require("./controllers/foneController");
 const UserController = require("./controllers/userController");
 
-const database = require("./infra/database");
+const database = require("./infra/sqlite-db");
 
 const app = express();
 
-const foneController = new FoneController(database.foneDB);
-const userController = new UserController(database.userDB);
+const foneController = new FoneController(database);
+const userController = new UserController(database);
 
 app.use(function (req, res, next) {
   console.log("Time:", Date.now());
