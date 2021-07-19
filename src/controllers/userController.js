@@ -8,27 +8,25 @@ class UserController {
   show = (req, res) => {
     const name = req.params.name;
 
-    this.dbConn.all(
-      `SELECT * FROM USUARIOS WHERE NOME LIKE '%${name}%'`,
-      (err, result) => {
-        if (!err) {
-          res.send(result[0]);
-
-          return;
-        } else {
-        }
-      }
-    );
+    this.dbConn
+      .getOneUser(name)
+      .then((user) => {
+        res.send(user);
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 
   index = (req, res) => {
-    this.dbConn.all("SELECT * FROM USUARIOS", (err, rows) => {
-      if (err) {
-        throw new Error(`ERROR na consulta ${err}`);
-      } else {
-        res.send(rows);
-      }
-    });
+    this.dbConn
+      .getAllUsers()
+      .then((users) => {
+        res.send(users);
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 
   store = (req, res) => {
@@ -36,14 +34,17 @@ class UserController {
 
     const user = new User(name, email, password);
 
-    this.dbConn.run(
-      `INSERT INTO USUARIOS (NOME, EMAIL, SENHA) VALUES ('${user.name}', '${user.email}', '${user.password}')`
-    );
-
-    res.send({
-      message: "Usuário salvo no banco de dados",
-      data: user,
-    });
+    this.dbConn
+      .insertUser(user)
+      .then((resolve) => {
+        res.send({
+          message: "Usuário salvo no banco de dados",
+          data: resolve,
+        });
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 
   update = (req, res) => {
@@ -53,22 +54,32 @@ class UserController {
 
     const user = new User(name, email, password);
 
-    this.dbConn.run(
-      `UPDATE USUARIOS SET NOME = '${user.name}', EMAIL = '${user.email}', SENHA = '${user.password}' WHERE NOME = '${userName}'`
-    );
-
-    res.send({ message: "Usuário alterado com sucesso", data: user });
+    this.dbConn
+      .updateUser(user, userName)
+      .then(() => {
+        res.send({ message: "Usuário alterado com sucesso", data: user });
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 
   delete = (req, res) => {
     const name = req.params.name;
 
-    this.dbConn.run(`DELETE FROM USUARIOS WHERE NOME like '${name}'`);
-
-    res.send({
-      message: "Usuário removido do banco de dados",
-      data: name,
-    });
+    this.dbConn
+      .removeUser(name)
+      .then((resolve) => {
+        if (resolve) {
+          res.send({
+            message: "Usuário removido do banco de dados",
+            data: name,
+          });
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 }
 
