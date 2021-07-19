@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
 app.use(express.json());
 
 app.get("/", function (req, res) {
-  res.send("Hello, World!");
+  res.send({ message: "Hello, World!" });
 });
 
 app.get("/fones/:model", foneController.show);

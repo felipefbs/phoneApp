@@ -1,14 +1,14 @@
 const User = require("../models/userModel");
 
 class UserController {
-  constructor(database) {
-    this.database = database;
+  constructor(dbConn) {
+    this.dbConn = dbConn;
   }
 
   show = (req, res) => {
     const name = req.params.name;
 
-    this.database.all(
+    this.dbConn.all(
       `SELECT * FROM USUARIOS WHERE NOME LIKE '%${name}%'`,
       (err, result) => {
         if (!err) {
@@ -22,11 +22,10 @@ class UserController {
   };
 
   index = (req, res) => {
-    this.database.all("SELECT * FROM USUARIOS", (err, rows) => {
+    this.dbConn.all("SELECT * FROM USUARIOS", (err, rows) => {
       if (err) {
         throw new Error(`ERROR na consulta ${err}`);
       } else {
-        console.log(rows);
         res.send(rows);
       }
     });
@@ -37,7 +36,7 @@ class UserController {
 
     const user = new User(name, email, password);
 
-    this.database.run(
+    this.dbConn.run(
       `INSERT INTO USUARIOS (NOME, EMAIL, SENHA) VALUES ('${user.name}', '${user.email}', '${user.password}')`
     );
 
@@ -54,7 +53,7 @@ class UserController {
 
     const user = new User(name, email, password);
 
-    this.database.run(
+    this.dbConn.run(
       `UPDATE USUARIOS SET NOME = '${user.name}', EMAIL = '${user.email}', SENHA = '${user.password}' WHERE NOME = '${userName}'`
     );
 
@@ -64,7 +63,7 @@ class UserController {
   delete = (req, res) => {
     const name = req.params.name;
 
-    this.database.run(`DELETE FROM USUARIOS WHERE NOME like '${name}'`);
+    this.dbConn.run(`DELETE FROM USUARIOS WHERE NOME like '${name}'`);
 
     res.send({
       message: "Usuário removido do banco de dados",
